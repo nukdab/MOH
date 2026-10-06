@@ -1001,7 +1001,6 @@ option {
 
 .standalone-form {
   max-width: 1050px;
-  margin-right: var(--sidebar-width);
 }
 
 .complaint-form {
