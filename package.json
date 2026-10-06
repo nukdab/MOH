@@ -1,0 +1,15 @@
+{
+  "name": "management-of-house",
+  "version": "1.0.0",
+  "private": true,
+  "description": "سامانه ثبت، مدیریت و پیگیری شکایات (Cloudflare Workers + D1)",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:local": "wrangler d1 execute management-of-house-db --local --file=./schema.sql",
+    "db:remote": "wrangler d1 execute management-of-house-db --remote --file=./schema.sql"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
