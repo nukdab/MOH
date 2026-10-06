@@ -1,1 +1,133 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0f172a">
+  <title>ورود و ثبت‌نام | مدیریت شکایات</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
 
+<body data-page="auth">
+  <div class="background-orb orb-one"></div>
+  <div class="background-orb orb-two"></div>
+
+  <main class="auth-page">
+    <div class="auth-brand">
+      <a class="brand" href="/">
+        <span class="brand-mark">م</span>
+        <span>
+          <strong>مدیریت شکایات</strong>
+          <small>سامانه ثبت و پیگیری</small>
+        </span>
+      </a>
+
+      <button class="icon-button" id="themeToggle" type="button">◐</button>
+    </div>
+
+    <section class="auth-card glass-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-mode="login" type="button">ورود</button>
+        <button class="auth-tab" data-mode="register" type="button">ثبت‌نام</button>
+      </div>
+
+      <div id="authMessage" class="message-box hidden"></div>
+
+      <form id="loginForm" class="auth-form">
+        <div class="section-heading compact">
+          <span class="eyebrow">خوش آمدید</span>
+          <h1>ورود به حساب</h1>
+          <p>شماره تلفن و رمز عبور خود را وارد کنید.</p>
+        </div>
+
+        <label class="field">
+          <span>شماره تلفن همراه</span>
+          <input
+            name="phone"
+            type="tel"
+            inputmode="tel"
+            autocomplete="tel"
+            placeholder="09123456789"
+            maxlength="13"
+            required
+          >
+          <small class="field-error" data-error-for="phone"></small>
+        </label>
+
+        <label class="field">
+          <span>رمز عبور</span>
+          <div class="password-wrap">
+            <input
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="رمز عبور"
+              required
+            >
+            <button class="password-toggle" type="button" aria-label="نمایش رمز">◉</button>
+          </div>
+          <small class="field-error" data-error-for="password"></small>
+        </label>
+
+        <button class="button button-primary button-wide" type="submit">
+          ورود
+        </button>
+      </form>
+
+      <form id="registerForm" class="auth-form hidden">
+        <div class="section-heading compact">
+          <span class="eyebrow">حساب جدید</span>
+          <h1>ثبت‌نام</h1>
+          <p>برای ایجاد حساب، اطلاعات زیر را وارد کنید.</p>
+        </div>
+
+        <label class="field">
+          <span>نام و نام خانوادگی</span>
+          <input name="full_name" type="text" autocomplete="name" maxlength="80" placeholder="مثلاً احسان مزروعی" required>
+          <small class="field-error" data-error-for="full_name"></small>
+        </label>
+
+        <label class="field">
+          <span>شماره تلفن همراه</span>
+          <input name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="13" placeholder="09123456789" required>
+          <small class="field-error" data-error-for="phone"></small>
+        </label>
+
+        <label class="field">
+          <span>رمز عبور</span>
+          <div class="password-wrap">
+            <input name="password" type="password" autocomplete="new-password" maxlength="128" placeholder="حداقل ۸ نویسه، شامل حرف و عدد" required>
+            <button class="password-toggle" type="button" aria-label="نمایش رمز">◉</button>
+          </div>
+          <small class="field-error" data-error-for="password"></small>
+        </label>
+
+        <label class="field">
+          <span>تکرار رمز عبور</span>
+          <div class="password-wrap">
+            <input name="password_confirm" type="password" autocomplete="new-password" maxlength="128" placeholder="تکرار رمز عبور" required>
+            <button class="password-toggle" type="button" aria-label="نمایش رمز">◉</button>
+          </div>
+          <small class="field-error" data-error-for="password_confirm"></small>
+        </label>
+
+        <label class="checkbox-field">
+          <input name="accept_terms" type="checkbox" value="true">
+          <span>قوانین استفاده از سامانه را می‌پذیرم.</span>
+        </label>
+        <small class="field-error" data-error-for="accept_terms"></small>
+
+        <button class="button button-primary button-wide" type="submit">
+          ایجاد حساب
+        </button>
+      </form>
+
+      <a class="back-link" href="/">← بازگشت به صفحه اصلی</a>
+    </section>
+  </main>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+  </html>
