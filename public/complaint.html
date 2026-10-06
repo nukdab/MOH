@@ -1,1 +1,199 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0f172a">
+  <title>ثبت شکایت | مدیریت شکایات</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
 
+<body data-page="complaint">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <a class="brand" href="/user.html">
+          <span class="brand-mark">م</span>
+          <span>
+            <strong>مدیریت شکایات</strong>
+            <small>ثبت شکایت</small>
+          </span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="/user.html" class="nav-item">⌂ <span>داشبورد</span></a>
+        <a href="/user.html#cases" class="nav-item">▣ <span>پرونده‌های من</span></a>
+        <a href="/user.html#notifications" class="nav-item">🔔 <span>ابلاغیه‌ها</span></a>
+        <a href="/complaint.html" class="nav-item active">＋ <span>ثبت شکایت جدید</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button id="themeToggle" class="nav-item nav-button" type="button">◐ <span>حالت نمایش</span></button>
+        <button id="logoutButton" class="nav-item nav-button danger-text" type="button">↪ <span>خروج</span></button>
+      </div>
+    </aside>
+
+    <main class="main-content standalone-form">
+      <header class="page-header">
+        <div>
+          <span class="eyebrow">پرونده جدید</span>
+          <h1>ثبت شکایت</h1>
+          <p>اطلاعات پرونده را با دقت تکمیل کنید.</p>
+        </div>
+        <a href="/user.html" class="button button-secondary">بازگشت</a>
+      </header>
+
+      <div id="complaintMessage" class="message-box hidden"></div>
+
+      <form id="complaintForm" class="glass-card complaint-form" enctype="multipart/form-data">
+        <div class="form-step">
+          <div class="step-title">
+            <span>۱</span>
+            <div>
+              <h2>نوع ثبت</h2>
+              <p>مشخص کنید شکایت برای چه کسی ثبت می‌شود.</p>
+            </div>
+          </div>
+
+          <div class="choice-grid">
+            <label class="choice-card">
+              <input type="radio" name="filed_for" value="self" checked>
+              <span class="choice-content">
+                <strong>برای خودم</strong>
+                <small>اطلاعات حساب من به عنوان شاکی ثبت شود.</small>
+              </span>
+            </label>
+
+            <label class="choice-card">
+              <input type="radio" name="filed_for" value="other">
+              <span class="choice-content">
+                <strong>برای شخص دیگر</strong>
+                <small>اطلاعات فرد موردنظر را وارد می‌کنم.</small>
+              </span>
+            </label>
+          </div>
+
+          <div id="otherPersonFields" class="nested-fields hidden">
+            <div class="form-grid">
+              <label class="field">
+                <span>نام و نام خانوادگی</span>
+                <input name="other_name" type="text" maxlength="80">
+                <small class="field-error" data-error-for="other_name"></small>
+              </label>
+
+              <label class="field">
+                <span>شماره تلفن</span>
+                <input name="other_phone" type="tel" inputmode="tel" maxlength="13" placeholder="09123456789">
+                <small class="field-error" data-error-for="other_phone"></small>
+              </label>
+
+              <label class="field">
+                <span>کد ملی</span>
+                <input name="other_national_id" type="text" inputmode="numeric" maxlength="10">
+                <small class="field-error" data-error-for="other_national_id"></small>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-step">
+          <div class="step-title">
+            <span>۲</span>
+            <div>
+              <h2>مشخصات شکایت</h2>
+              <p>موضوع و شرح کامل شکایت را وارد کنید.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <label class="field">
+              <span>دسته‌بندی</span>
+              <select name="category" required>
+                <option value="">انتخاب کنید</option>
+                <option value="services">خدمات</option>
+                <option value="financial">مالی</option>
+                <option value="administrative">اداری</option>
+                <option value="technical">فنی</option>
+                <option value="behavior">رفتاری</option>
+                <option value="other">سایر</option>
+              </select>
+              <small class="field-error" data-error-for="category"></small>
+            </label>
+
+            <label class="field">
+              <span>نام طرف شکایت</span>
+              <input name="against_name" type="text" maxlength="120" placeholder="اختیاری">
+              <small class="field-error" data-error-for="against_name"></small>
+            </label>
+
+            <label class="field full">
+              <span>موضوع</span>
+              <input name="subject" type="text" maxlength="150" required placeholder="موضوع شکایت را کوتاه و واضح بنویسید">
+              <small class="field-error" data-error-for="subject"></small>
+            </label>
+
+            <label class="field full">
+              <span>شرح شکایت</span>
+              <textarea name="description" rows="8" maxlength="5000" required placeholder="شرح کامل موضوع، زمان، محل و جزئیات مربوطه را بنویسید."></textarea>
+              <div class="textarea-footer">
+                <small class="field-error" data-error-for="description"></small>
+                <span id="descriptionCount">۰ / ۵۰۰۰</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-step">
+          <div class="step-title">
+            <span>۳</span>
+            <div>
+              <h2>پیوست‌ها</h2>
+              <p>در صورت نیاز مدارک مرتبط را اضافه کنید.</p>
+            </div>
+          </div>
+
+          <label class="upload-zone" for="files">
+            <input id="files" name="files" type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.webp,.doc,.docx">
+            <span class="upload-icon">↑</span>
+            <strong>برای انتخاب فایل کلیک کنید</strong>
+            <small>PDF، PNG، JPG، WEBP، DOC و DOCX — حداکثر ۵ فایل، هرکدام ۱ مگابایت</small>
+          </label>
+
+          <div id="fileList" class="selected-files"></div>
+          <small class="field-error" data-error-for="files"></small>
+        </div>
+
+        <div class="form-step">
+          <div class="step-title">
+            <span>۴</span>
+            <div>
+              <h2>امضا</h2>
+              <p>امضای خود را داخل کادر رسم کنید.</p>
+            </div>
+          </div>
+
+          <div class="signature-wrapper">
+            <canvas id="signatureCanvas" width="900" height="300"></canvas>
+            <button id="clearSignature" class="button button-secondary button-small" type="button">پاک کردن امضا</button>
+          </div>
+
+          <input id="signatureInput" name="signature" type="hidden">
+          <small class="field-error" data-error-for="signature"></small>
+        </div>
+
+        <div class="form-actions">
+          <a href="/user.html" class="button button-secondary">انصراف</a>
+          <button id="submitComplaint" class="button button-primary" type="submit">
+            ثبت نهایی شکایت
+          </button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/complaint.js"></script>
+</body>
+</html>
