@@ -1,1 +1,228 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0f172a">
+  <title>مدیریت | مدیریت شکایات</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
 
+<body data-page="admin">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <a class="brand" href="/admin.html">
+          <span class="brand-mark">م</span>
+          <span>
+            <strong>مدیریت شکایات</strong>
+            <small>پنل مدیریت</small>
+          </span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="nav-item active" data-admin-section="dashboard">⌂ <span>داشبورد</span></a>
+        <a href="#cases" class="nav-item" data-admin-section="cases">▣ <span>پرونده‌ها</span></a>
+        <a href="#audit" class="nav-item" data-admin-section="audit">◈ <span>گزارش فعالیت‌ها</span></a>
+        <a href="/complaint.html" class="nav-item">＋ <span>ثبت شکایت شخصی</span></a>
+        <a href="/user.html" class="nav-item">◎ <span>پنل کاربری</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button id="themeToggle" class="nav-item nav-button" type="button">◐ <span>حالت نمایش</span></button>
+        <button id="logoutButton" class="nav-item nav-button danger-text" type="button">↪ <span>خروج</span></button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <span class="eyebrow">پنل مدیریت</span>
+          <h1 id="adminWelcome">مدیریت سامانه</h1>
+          <p>پرونده‌ها، وضعیت رسیدگی، ابلاغیه‌ها و سوابق فعالیت را مدیریت کنید.</p>
+        </div>
+      </header>
+
+      <div id="adminMessage" class="message-box hidden"></div>
+
+      <section id="adminDashboardSection" class="admin-section">
+        <div class="stats-grid">
+          <article class="stat-card glass-card">
+            <span>کل پرونده‌ها</span>
+            <strong id="adminTotal">۰</strong>
+            <small>تمام پرونده‌ها</small>
+          </article>
+
+          <article class="stat-card glass-card">
+            <span>ثبت‌شده</span>
+            <strong id="adminSubmitted">۰</strong>
+            <small>منتظر بررسی</small>
+          </article>
+
+          <article class="stat-card glass-card">
+            <span>در حال بررسی</span>
+            <strong id="adminReviewing">۰</strong>
+            <small>پرونده فعال</small>
+          </article>
+
+          <article class="stat-card glass-card">
+            <span>کاربران</span>
+            <strong id="adminUsers">۰</strong>
+            <small>حساب‌های سامانه</small>
+          </article>
+        </div>
+
+        <div class="glass-card panel-card">
+          <div class="panel-heading">
+            <div>
+              <span class="eyebrow">مدیریت سریع</span>
+              <h2>آخرین پرونده‌ها</h2>
+            </div>
+            <button class="button button-primary button-small" data-admin-go="cases" type="button">مشاهده همه</button>
+          </div>
+          <div id="dashboardCases" class="case-list"></div>
+        </div>
+      </section>
+
+      <section id="adminCasesSection" class="admin-section hidden">
+        <div class="glass-card panel-card">
+          <div class="panel-heading">
+            <div>
+              <span class="eyebrow">مدیریت پرونده‌ها</span>
+              <h2>تمام پرونده‌ها</h2>
+            </div>
+          </div>
+
+          <div class="filters">
+            <label class="field filter-search">
+              <span>جستجو</span>
+              <input id="caseSearch" type="search" placeholder="کد رهگیری، نام، تلفن یا موضوع">
+            </label>
+
+            <label class="field filter-status">
+              <span>وضعیت</span>
+              <select id="caseStatusFilter">
+                <option value="">همه وضعیت‌ها</option>
+                <option value="submitted">ثبت‌شده</option>
+                <option value="reviewing">در حال بررسی</option>
+                <option value="answered">پاسخ داده‌شده</option>
+                <option value="closed">بسته‌شده</option>
+                <option value="rejected">رد‌شده</option>
+              </select>
+            </label>
+
+            <button id="caseFilterButton" class="button button-primary filter-button" type="button">جستجو</button>
+          </div>
+
+          <div id="adminCases" class="admin-case-table"></div>
+
+          <div class="pagination">
+            <button id="prevPage" class="button button-secondary button-small" type="button">قبلی</button>
+            <span id="pageInfo">صفحه ۱</span>
+            <button id="nextPage" class="button button-secondary button-small" type="button">بعدی</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="adminCaseDetailSection" class="admin-section hidden">
+        <div class="glass-card panel-card">
+          <div class="panel-heading">
+            <button id="backToCases" class="button button-secondary button-small" type="button">← بازگشت</button>
+            <div>
+              <span class="eyebrow">پرونده</span>
+              <h2 id="adminCaseSubject">جزئیات پرونده</h2>
+            </div>
+          </div>
+
+          <div id="adminCaseDetail"></div>
+
+          <div class="admin-actions-grid">
+            <div class="action-card">
+              <h3>تغییر وضعیت</h3>
+              <label class="field">
+                <span>وضعیت جدید</span>
+                <select id="newCaseStatus">
+                  <option value="submitted">ثبت‌شده</option>
+                  <option value="reviewing">در حال بررسی</option>
+                  <option value="answered">پاسخ داده‌شده</option>
+                  <option value="closed">بسته‌شده</option>
+                  <option value="rejected">رد‌شده</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>توضیح</span>
+                <textarea id="statusNote" rows="4" maxlength="1000" placeholder="توضیح اختیاری برای کاربر"></textarea>
+              </label>
+
+              <button id="saveCaseStatus" class="button button-primary button-wide" type="button">
+                ذخیره وضعیت
+              </button>
+            </div>
+
+            <div class="action-card">
+              <h3>ارسال ابلاغیه</h3>
+
+              <label class="field">
+                <span>عنوان</span>
+                <input id="notificationTitle" maxlength="120">
+              </label>
+
+              <label class="field">
+                <span>متن</span>
+                <textarea id="notificationBody" rows="4" maxlength="2000"></textarea>
+              </label>
+
+              <label class="checkbox-field">
+                <input id="requiresConfirmation" type="checkbox">
+                <span>نیازمند تأیید دریافت</span>
+              </label>
+
+              <button id="sendNotification" class="button button-primary button-wide" type="button">
+                ارسال ابلاغیه
+              </button>
+            </div>
+
+            <div class="action-card">
+              <h3>افزودن شکواییه / دادخواست</h3>
+
+              <label class="upload-zone compact-upload" for="petitionFile">
+                <input id="petitionFile" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.doc,.docx">
+                <strong>انتخاب فایل</strong>
+                <small>حداکثر ۱ مگابایت</small>
+              </label>
+
+              <label class="field">
+                <span>توضیح</span>
+                <textarea id="petitionNote" rows="3" maxlength="500"></textarea>
+              </label>
+
+              <button id="uploadPetition" class="button button-primary button-wide" type="button">
+                افزودن فایل
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="adminAuditSection" class="admin-section hidden">
+        <div class="glass-card panel-card">
+          <div class="panel-heading">
+            <div>
+              <span class="eyebrow">Audit Log</span>
+              <h2>گزارش فعالیت مدیران</h2>
+            </div>
+          </div>
+
+          <div id="auditLogs" class="audit-list"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
