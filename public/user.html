@@ -1,1 +1,155 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0f172a">
+  <title>پنل کاربری | مدیریت شکایات</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
 
+<body data-page="user">
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <a class="brand" href="/">
+          <span class="brand-mark">م</span>
+          <span>
+            <strong>مدیریت شکایات</strong>
+            <small>پنل کاربری</small>
+          </span>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="nav-item active" data-section="dashboard">⌂ <span>داشبورد</span></a>
+        <a href="#cases" class="nav-item" data-section="cases">▣ <span>پرونده‌های من</span></a>
+        <a href="#notifications" class="nav-item" data-section="notifications">
+          🔔 <span>ابلاغیه‌ها</span>
+          <b class="nav-count hidden" id="notificationCount">0</b>
+        </a>
+        <a href="/complaint.html" class="nav-item">＋ <span>ثبت شکایت جدید</span></a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button id="themeToggle" class="nav-item nav-button" type="button">◐ <span>حالت نمایش</span></button>
+        <button id="logoutButton" class="nav-item nav-button danger-text" type="button">↪ <span>خروج</span></button>
+      </div>
+    </aside>
+
+    <div class="mobile-topbar">
+      <button id="sidebarToggle" class="icon-button" type="button">☰</button>
+      <strong>مدیریت شکایات</strong>
+      <button id="mobileThemeToggle" class="icon-button" type="button">◐</button>
+    </div>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <span class="eyebrow">پنل کاربری</span>
+          <h1 id="welcomeTitle">سلام</h1>
+          <p>وضعیت پرونده‌ها و ابلاغیه‌های خود را مدیریت کنید.</p>
+        </div>
+
+        <a class="button button-primary" href="/complaint.html">＋ ثبت شکایت</a>
+      </header>
+
+      <div id="globalMessage" class="message-box hidden"></div>
+
+      <section id="dashboardSection" class="page-section">
+        <div class="stats-grid">
+          <article class="stat-card glass-card">
+            <span>کل پرونده‌ها</span>
+            <strong id="statTotal">۰</strong>
+            <small>پرونده ثبت‌شده</small>
+          </article>
+
+          <article class="stat-card glass-card">
+            <span>در حال بررسی</span>
+            <strong id="statReviewing">۰</strong>
+            <small>نیازمند رسیدگی</small>
+          </article>
+
+          <article class="stat-card glass-card">
+            <span>پاسخ داده‌شده</span>
+            <strong id="statAnswered">۰</strong>
+            <small>دارای پاسخ</small>
+          </article>
+
+          <article class="stat-card glass-card">
+            <span>ابلاغیه خوانده‌نشده</span>
+            <strong id="statUnread">۰</strong>
+            <small>اعلان جدید</small>
+          </article>
+        </div>
+
+        <div class="content-grid">
+          <section class="glass-card panel-card">
+            <div class="panel-heading">
+              <div>
+                <span class="eyebrow">آخرین پرونده‌ها</span>
+                <h2>پرونده‌های اخیر</h2>
+              </div>
+              <button class="text-button" data-go-section="cases" type="button">مشاهده همه</button>
+            </div>
+            <div id="recentCases" class="case-list"></div>
+          </section>
+
+          <section class="glass-card panel-card">
+            <div class="panel-heading">
+              <div>
+                <span class="eyebrow">اعلان‌ها</span>
+                <h2>آخرین ابلاغیه‌ها</h2>
+              </div>
+              <button class="text-button" data-go-section="notifications" type="button">مشاهده همه</button>
+            </div>
+            <div id="recentNotifications" class="notification-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="casesSection" class="page-section hidden">
+        <div class="glass-card panel-card">
+          <div class="panel-heading">
+            <div>
+              <span class="eyebrow">پرونده‌ها</span>
+              <h2>تمام پرونده‌های من</h2>
+            </div>
+            <a class="button button-primary button-small" href="/complaint.html">ثبت پرونده جدید</a>
+          </div>
+          <div id="allCases" class="case-list"></div>
+        </div>
+      </section>
+
+      <section id="notificationsSection" class="page-section hidden">
+        <div class="glass-card panel-card">
+          <div class="panel-heading">
+            <div>
+              <span class="eyebrow">ابلاغیه‌ها</span>
+              <h2>اعلان‌های من</h2>
+            </div>
+          </div>
+          <div id="allNotifications" class="notification-list"></div>
+        </div>
+      </section>
+
+      <section id="caseDetailSection" class="page-section hidden">
+        <div class="glass-card panel-card">
+          <div class="panel-heading">
+            <button id="closeCaseDetail" class="button button-secondary button-small" type="button">← بازگشت</button>
+            <div class="case-detail-title">
+              <span class="eyebrow">جزئیات پرونده</span>
+              <h2 id="caseDetailSubject">پرونده</h2>
+            </div>
+          </div>
+          <div id="caseDetail"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/user.js"></script>
+</body>
+</html>
